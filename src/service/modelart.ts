@@ -15,7 +15,7 @@ const MODELART_CONFIG = {
     url: 'https://api.modelarts-maas.com/v1/chat/completions',
     model: 'qwen2.5-vl-72b',
   },
-  apiKey: 'jDJlFHvT3ZJVYWDTNqEJFDzIiNxFlmR3daNoeEstaRQj78pn40CatR3BRxZ6SA-pQlf_g3BuN8YmsYVSYUJOwA',
+  apiKey: 'MODELART_CONFIG.apiKey',
 }
 
 // 急救系统提示词
