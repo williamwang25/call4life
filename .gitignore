@@ -8,11 +8,15 @@ pnpm-debug.log*
 lerna-debug.log*
 
 node_modules
+env
 .DS_Store
 dist
 docs
 *.local
-env
+.env
+.env.development
+.env.production
+.env.test
 
 # Editor directories and files
 .idea
