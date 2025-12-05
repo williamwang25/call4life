@@ -1,0 +1,315 @@
+/**
+ * 救驾先锋 Call for Life 主题配置
+ * 支持橙红白和蓝白两种配色主题
+ */
+
+// ===== 主题变量 =====
+// 默认使用橙红白主题
+:root {
+  // 主色调
+  --c4l-primary: #FF6B35;
+  --c4l-primary-light: #FF8A5C;
+  --c4l-primary-dark: #E55A2B;
+  --c4l-primary-gradient: linear-gradient(135deg, #FF6B35 0%, #FF8A5C 100%);
+
+  // 紧急色
+  --c4l-danger: #E53935;
+  --c4l-danger-light: #EF5350;
+  --c4l-danger-dark: #C62828;
+
+  // 成功色
+  --c4l-success: #43A047;
+  --c4l-success-light: #66BB6A;
+  --c4l-success-dark: #2E7D32;
+
+  // 警告色
+  --c4l-warning: #FB8C00;
+  --c4l-warning-light: #FFA726;
+  --c4l-warning-dark: #EF6C00;
+
+  // 信息色
+  --c4l-info: #1E88E5;
+  --c4l-info-light: #42A5F5;
+  --c4l-info-dark: #1565C0;
+
+  // 背景色
+  --c4l-bg-primary: #FFFFFF;
+  --c4l-bg-secondary: #F8F9FA;
+  --c4l-bg-tertiary: #F0F2F5;
+  --c4l-bg-card: #FFFFFF;
+
+  // 文字颜色
+  --c4l-text-primary: #1A1A2E;
+  --c4l-text-secondary: #6B7280;
+  --c4l-text-tertiary: #9CA3AF;
+  --c4l-text-inverse: #FFFFFF;
+
+  // 边框颜色
+  --c4l-border: #E5E7EB;
+  --c4l-border-light: #F3F4F6;
+
+  // 阴影
+  --c4l-shadow-sm: 0 2rpx 8rpx rgba(0, 0, 0, 0.04);
+  --c4l-shadow-md: 0 8rpx 24rpx rgba(0, 0, 0, 0.08);
+  --c4l-shadow-lg: 0 16rpx 48rpx rgba(0, 0, 0, 0.12);
+  --c4l-shadow-card: 0 4rpx 20rpx rgba(0, 0, 0, 0.06);
+
+  // 圆角
+  --c4l-radius-sm: 8rpx;
+  --c4l-radius-md: 16rpx;
+  --c4l-radius-lg: 24rpx;
+  --c4l-radius-xl: 32rpx;
+  --c4l-radius-full: 9999rpx;
+
+  // 间距
+  --c4l-spacing-xs: 8rpx;
+  --c4l-spacing-sm: 16rpx;
+  --c4l-spacing-md: 24rpx;
+  --c4l-spacing-lg: 32rpx;
+  --c4l-spacing-xl: 48rpx;
+
+  // 字体大小
+  --c4l-font-xs: 22rpx;
+  --c4l-font-sm: 26rpx;
+  --c4l-font-md: 28rpx;
+  --c4l-font-lg: 32rpx;
+  --c4l-font-xl: 36rpx;
+  --c4l-font-2xl: 44rpx;
+  --c4l-font-3xl: 56rpx;
+  --c4l-font-4xl: 72rpx;
+}
+
+// 蓝白主题
+.theme-blue {
+  --c4l-primary: #2563EB;
+  --c4l-primary-light: #3B82F6;
+  --c4l-primary-dark: #1D4ED8;
+  --c4l-primary-gradient: linear-gradient(135deg, #2563EB 0%, #3B82F6 100%);
+}
+
+// ===== 通用样式类 =====
+.c4l-page {
+  min-height: 100vh;
+  background-color: var(--c4l-bg-secondary);
+  width: 100%;
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+.c4l-card {
+  background: var(--c4l-bg-card);
+  border-radius: var(--c4l-radius-lg);
+  box-shadow: var(--c4l-shadow-card);
+  padding: var(--c4l-spacing-lg);
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: var(--c4l-spacing-md);
+}
+
+.c4l-card-glass {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(20rpx);
+  -webkit-backdrop-filter: blur(20rpx);
+  border-radius: var(--c4l-radius-lg);
+  box-shadow: var(--c4l-shadow-card);
+  padding: var(--c4l-spacing-lg);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+// 文字样式
+.c4l-title {
+  font-size: var(--c4l-font-xl);
+  font-weight: 700;
+  color: var(--c4l-text-primary);
+  letter-spacing: 1rpx;
+}
+
+.c4l-subtitle {
+  font-size: var(--c4l-font-lg);
+  font-weight: 600;
+  color: var(--c4l-text-primary);
+}
+
+.c4l-body {
+  font-size: var(--c4l-font-md);
+  color: var(--c4l-text-secondary);
+  line-height: 1.6;
+}
+
+.c4l-caption {
+  font-size: var(--c4l-font-sm);
+  color: var(--c4l-text-tertiary);
+}
+
+// 按钮样式
+.c4l-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--c4l-spacing-md) var(--c4l-spacing-lg);
+  border-radius: var(--c4l-radius-full);
+  font-size: var(--c4l-font-lg);
+  font-weight: 600;
+  transition: all 0.3s ease;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.c4l-btn-primary {
+  background: var(--c4l-primary-gradient);
+  color: var(--c4l-text-inverse);
+  box-shadow: 0 8rpx 24rpx rgba(255, 107, 53, 0.35);
+
+  &:active {
+    transform: scale(0.98);
+    box-shadow: 0 4rpx 12rpx rgba(255, 107, 53, 0.25);
+  }
+}
+
+.c4l-btn-danger {
+  background: linear-gradient(135deg, #E53935 0%, #EF5350 100%);
+  color: var(--c4l-text-inverse);
+  box-shadow: 0 8rpx 24rpx rgba(229, 57, 53, 0.35);
+
+  &:active {
+    transform: scale(0.98);
+  }
+}
+
+.c4l-btn-success {
+  background: linear-gradient(135deg, #43A047 0%, #66BB6A 100%);
+  color: var(--c4l-text-inverse);
+  box-shadow: 0 8rpx 24rpx rgba(67, 160, 71, 0.35);
+
+  &:active {
+    transform: scale(0.98);
+  }
+}
+
+.c4l-btn-outline {
+  background: transparent;
+  border: 2rpx solid var(--c4l-primary);
+  color: var(--c4l-primary);
+
+  &:active {
+    background: rgba(255, 107, 53, 0.1);
+  }
+}
+
+// 状态标签样式
+.c4l-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 8rpx 20rpx;
+  border-radius: var(--c4l-radius-full);
+  font-size: var(--c4l-font-xs);
+  font-weight: 500;
+}
+
+.c4l-tag-success {
+  background: rgba(67, 160, 71, 0.15);
+  color: var(--c4l-success);
+}
+
+.c4l-tag-warning {
+  background: rgba(251, 140, 0, 0.15);
+  color: var(--c4l-warning);
+}
+
+.c4l-tag-danger {
+  background: rgba(229, 57, 53, 0.15);
+  color: var(--c4l-danger);
+}
+
+.c4l-tag-info {
+  background: rgba(30, 136, 229, 0.15);
+  color: var(--c4l-info);
+}
+
+// 动画
+@keyframes c4l-pulse {
+
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  50% {
+    transform: scale(1.05);
+    opacity: 0.8;
+  }
+}
+
+@keyframes c4l-wave {
+  0% {
+    transform: scale(0.8);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+@keyframes c4l-breathe {
+
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 107, 53, 0.4);
+  }
+
+  50% {
+    box-shadow: 0 0 0 20rpx rgba(255, 107, 53, 0);
+  }
+}
+
+@keyframes c4l-float {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10rpx);
+  }
+}
+
+.c4l-animate-pulse {
+  animation: c4l-pulse 2s ease-in-out infinite;
+}
+
+.c4l-animate-breathe {
+  animation: c4l-breathe 2s ease-in-out infinite;
+}
+
+.c4l-animate-float {
+  animation: c4l-float 3s ease-in-out infinite;
+}
+
+// 图标点样式
+.c4l-dot {
+  width: 16rpx;
+  height: 16rpx;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 12rpx;
+}
+
+.c4l-dot-success {
+  background: var(--c4l-success);
+  box-shadow: 0 0 8rpx var(--c4l-success);
+}
+
+.c4l-dot-warning {
+  background: var(--c4l-warning);
+  box-shadow: 0 0 8rpx var(--c4l-warning);
+}
+
+.c4l-dot-danger {
+  background: var(--c4l-danger);
+  box-shadow: 0 0 8rpx var(--c4l-danger);
+}
