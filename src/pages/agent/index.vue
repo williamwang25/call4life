@@ -2,8 +2,10 @@
 /**
  * AI急救智能体页面
  * 基于华为云ModelArts和MindSpore框架
+ * 文本模型：DeepSeek V3.2
+ * 图像模型：Qwen2.5-VL-72B-32K
  */
-import { getMockResponse } from '@/service/modelart'
+import { chatWithTextModel, chatWithVisionModel, type ChatMessage } from '@/service/modelart'
 
 defineOptions({
   name: 'AIAgent',
@@ -30,6 +32,8 @@ const isLoading = ref(false)
 const isRecording = ref(false)
 const scrollToBottom = ref('')
 const messageIdCounter = ref(0)
+// 保存对话历史用于上下文
+const chatHistory = ref<ChatMessage[]>([])
 
 const quickActions = ref([
   { id: 'consciousness', label: '评估意识', icon: '👁️' },
@@ -39,7 +43,7 @@ const quickActions = ref([
 ])
 
 function initWelcome() {
-  addMessage('assistant', '您好！我是AI急救助手。\n\n如遇紧急情况，请先拨打120。我会指导您进行急救操作。')
+  addMessage('assistant', '您好！我是AI急救助手，由华为云ModelArts提供支持。\n\n如遇紧急情况，请先拨打120。我会指导您进行急救操作。')
 }
 
 function addMessage(type: 'user' | 'assistant' | 'system', content: string, image?: string) {
@@ -49,16 +53,33 @@ function addMessage(type: 'user' | 'assistant' | 'system', content: string, imag
   nextTick(() => { scrollToBottom.value = `msg-${messageIdCounter.value - 1}` })
 }
 
+// 调用文本模型 DeepSeek V3.2
 async function sendMessage() {
   const text = inputText.value.trim()
   if (!text || isLoading.value) return
+  
   addMessage('user', text)
   inputText.value = ''
   isLoading.value = true
-  setTimeout(() => {
-    addMessage('assistant', getMockResponse(text, false))
+  
+  // 添加到对话历史
+  chatHistory.value.push({ role: 'user', content: text })
+  
+  try {
+    const response = await chatWithTextModel(chatHistory.value)
+    
+    if (response.success) {
+      addMessage('assistant', response.message)
+      // 将AI回复也加入历史
+      chatHistory.value.push({ role: 'assistant', content: response.message })
+    } else {
+      addMessage('assistant', `抱歉，请求失败：${response.error}\n\n请稍后重试或拨打120获取帮助。`)
+    }
+  } catch (error: any) {
+    addMessage('assistant', `网络错误：${error.message || '未知错误'}\n\n请检查网络连接后重试。`)
+  } finally {
     isLoading.value = false
-  }, 800)
+  }
 }
 
 function handleQuickAction(action: typeof quickActions.value[0]) {
@@ -72,18 +93,42 @@ function handleQuickAction(action: typeof quickActions.value[0]) {
   sendMessage()
 }
 
+// 调用多模态模型 Qwen2.5-VL-72B
 function chooseImage() {
   uni.chooseImage({
     count: 1,
     sizeType: ['compressed'],
     sourceType: ['album', 'camera'],
-    success: (res) => {
-      addMessage('user', '请分析图片中的情况', res.tempFilePaths[0])
+    success: async (res) => {
+      const tempPath = res.tempFilePaths[0]
+      addMessage('user', '请分析图片中的患者情况', tempPath)
       isLoading.value = true
-      setTimeout(() => {
-        addMessage('assistant', getMockResponse('', true))
+      
+      try {
+        // 读取图片并转为Base64
+        const fs = uni.getFileSystemManager()
+        const base64 = fs.readFileSync(tempPath, 'base64') as string
+        
+        // 判断图片类型
+        const imageType = tempPath.toLowerCase().endsWith('.png') ? 'png' : 'jpeg'
+        
+        // 调用多模态模型
+        const response = await chatWithVisionModel(
+          '请分析这张图片中的患者情况，并给出急救建议。',
+          base64,
+          imageType
+        )
+        
+        if (response.success) {
+          addMessage('assistant', response.message)
+        } else {
+          addMessage('assistant', `图片分析失败：${response.error}\n\n请尝试描述患者情况，或拨打120。`)
+        }
+      } catch (error: any) {
+        addMessage('assistant', `图片处理错误：${error.message || '未知错误'}\n\n请尝试重新上传或描述情况。`)
+      } finally {
         isLoading.value = false
-      }, 1200)
+      }
     },
   })
 }
